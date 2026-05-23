@@ -1,9 +1,127 @@
 import { useMemo, useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text, View, StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 import { ScreenShell } from "@/components/ScreenShell";
 import { dashboardNotifications } from "@/data/dashboard";
+
+const styles = StyleSheet.create({
+  summaryCard: {
+    borderRadius: 28,
+    backgroundColor: "#0057A8",
+    padding: 20,
+  },
+  summaryLabel: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: "rgba(255, 255, 255, 0.75)",
+    textTransform: "uppercase",
+    letterSpacing: 0.22,
+  },
+  summaryCount: {
+    marginTop: 8,
+    fontSize: 26,
+    fontWeight: "bold",
+    color: "#FFFFFF",
+  },
+  markAllButton: {
+    marginTop: 16,
+    alignSelf: "flex-start",
+    borderRadius: 16,
+    backgroundColor: "rgba(255, 255, 255, 0.15)",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  markAllButtonText: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#FFFFFF",
+  },
+  notificationsContainer: {
+    marginTop: 24,
+    gap: 12,
+  },
+  notificationCard: {
+    borderRadius: 24,
+    backgroundColor: "#FFFFFF",
+    padding: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 20 },
+    shadowOpacity: 0.08,
+    shadowRadius: 50,
+    elevation: 5,
+  },
+  notificationRow: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 12,
+  },
+  iconContainer: {
+    marginTop: 4,
+    width: 40,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 16,
+  },
+  iconContainerUnread: {
+    backgroundColor: "#EF9F271A",
+  },
+  iconContainerRead: {
+    backgroundColor: "#F1F5F9",
+  },
+  notificationContent: {
+    flex: 1,
+  },
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  titleText: {
+    flex: 1,
+    paddingRight: 12,
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#0F172A",
+  },
+  unreadIndicator: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: "#EF9F27",
+  },
+  messageText: {
+    marginTop: 4,
+    fontSize: 13,
+    lineHeight: 20,
+    color: "#475569",
+  },
+  timeText: {
+    marginTop: 8,
+    fontSize: 11,
+    color: "#94A3B8",
+    textTransform: "uppercase",
+    letterSpacing: 0.18,
+  },
+  backButton: {
+    marginTop: 24,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#0057A8",
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+  },
+  backButtonText: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#0057A8",
+  },
+});
 
 export function NotificacionesScreen({ navigation }) {
   const [items, setItems] = useState(dashboardNotifications);
@@ -19,37 +137,37 @@ export function NotificacionesScreen({ navigation }) {
 
   return (
     <ScreenShell title="Notificaciones" subtitle="Avisos de emisión, recordatorios tributarios y novedades de tu cuenta.">
-      <View className="rounded-[28px] bg-primary p-5">
-        <Text className="text-[12px] font-semibold uppercase tracking-[0.22em] text-white/75">Bandeja</Text>
-        <Text className="mt-2 text-[26px] font-bold text-white">{unreadCount} sin leer</Text>
-        <Pressable onPress={markAllAsRead} className="mt-4 self-start rounded-full bg-white/15 px-4 py-2">
-          <Text className="text-[13px] font-semibold text-white">Marcar todo como leído</Text>
+      <View style={styles.summaryCard}>
+        <Text style={styles.summaryLabel}>Bandeja</Text>
+        <Text style={styles.summaryCount}>{unreadCount} sin leer</Text>
+        <Pressable onPress={markAllAsRead} style={styles.markAllButton}>
+          <Text style={styles.markAllButtonText}>Marcar todo como leído</Text>
         </Pressable>
       </View>
 
-      <View className="mt-6 gap-3">
+      <View style={styles.notificationsContainer}>
         {items.map((item, index) => (
-          <Pressable key={`${item.title}-${index}`} onPress={() => markAsRead(index)} className="rounded-3xl bg-white p-4 shadow-soft">
-            <View className="flex-row items-start gap-3">
-              <View className={`mt-1 h-10 w-10 items-center justify-center rounded-2xl ${item.unread ? "bg-alert/10" : "bg-slate-100"}`}>
+          <Pressable key={`${item.title}-${index}`} onPress={() => markAsRead(index)} style={styles.notificationCard}>
+            <View style={styles.notificationRow}>
+              <View style={[styles.iconContainer, item.unread ? styles.iconContainerUnread : styles.iconContainerRead]}>
                 <Feather name={item.unread ? "bell" : "check"} size={18} color={item.unread ? "#EF9F27" : "#64748B"} />
               </View>
-              <View className="flex-1">
-                <View className="flex-row items-center justify-between">
-                  <Text className="flex-1 pr-3 text-[15px] font-semibold text-slate-900">{item.title}</Text>
-                  {item.unread ? <View className="h-2.5 w-2.5 rounded-full bg-alert" /> : null}
+              <View style={styles.notificationContent}>
+                <View style={styles.titleRow}>
+                  <Text style={styles.titleText}>{item.title}</Text>
+                  {item.unread ? <View style={styles.unreadIndicator} /> : null}
                 </View>
-                <Text className="mt-1 text-[13px] leading-5 text-slate-600">{item.message}</Text>
-                <Text className="mt-2 text-[11px] uppercase tracking-[0.18em] text-slate-400">{item.time}</Text>
+                <Text style={styles.messageText}>{item.message}</Text>
+                <Text style={styles.timeText}>{item.time}</Text>
               </View>
             </View>
           </Pressable>
         ))}
       </View>
 
-      <Pressable onPress={() => navigation.goBack()} className="mt-6 flex-row items-center justify-center gap-2 rounded-2xl border border-primary px-4 py-4">
+      <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
         <Feather name="arrow-left" size={16} color="#0057A8" />
-        <Text className="text-[15px] font-semibold text-primary">Volver al inicio</Text>
+        <Text style={styles.backButtonText}>Volver al inicio</Text>
       </Pressable>
     </ScreenShell>
   );
