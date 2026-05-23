@@ -1,27 +1,63 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text, View, StyleSheet } from "react-native";
 
-const variantStyles = {
-  primary: "bg-primary",
-  light: "bg-white",
-  muted: "bg-slate-100",
-};
-
-const textStyles = {
-  primary: "text-white",
-  light: "text-primary",
-  muted: "text-slate-900",
-};
+const styles = StyleSheet.create({
+  primary: {
+    backgroundColor: "#0057A8",
+    borderRadius: 16,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    marginVertical: 4,
+  },
+  light: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderWidth: 1,
+    borderColor: "#0057A8",
+    marginVertical: 4,
+  },
+  muted: {
+    backgroundColor: "#F1F5F9",
+    borderRadius: 16,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    marginVertical: 4,
+  },
+  primaryText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  lightText: {
+    color: "#0057A8",
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  mutedText: {
+    color: "#1F2937",
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  disabled: {
+    opacity: 0.6,
+  },
+});
 
 export function PrimaryButton({ title, onPress, className = "", disabled = false, variant = "primary" }) {
+  const variantStyle = variant === "primary" ? styles.primary : variant === "light" ? styles.light : styles.muted;
+  const textStyle = variant === "primary" ? styles.primaryText : variant === "light" ? styles.lightText : styles.mutedText;
+
   return (
     <Pressable
       onPress={onPress}
       disabled={disabled}
-      className={`overflow-hidden rounded-2xl px-5 py-4 active:opacity-90 ${variantStyles[variant]} ${disabled ? "opacity-60" : ""} ${className}`}
+      style={[variantStyle, disabled && styles.disabled]}
     >
-      <View>
-        <Text className={`text-center text-base font-bold ${textStyles[variant]}`}>{title}</Text>
-      </View>
+      <Text style={textStyle}>{title}</Text>
     </Pressable>
   );
 }

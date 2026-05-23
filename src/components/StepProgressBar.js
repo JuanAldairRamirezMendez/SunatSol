@@ -1,16 +1,51 @@
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
+
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 8,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 8,
+  },
+  label: {
+    fontSize: 12,
+    fontWeight: "600",
+    letterSpacing: 0.18,
+    textTransform: "uppercase",
+    color: "#94A3B8",
+  },
+  percentage: {
+    fontSize: 12,
+    fontWeight: "bold",
+    color: "#0057A8",
+  },
+  barContainer: {
+    height: 8,
+    borderRadius: 4,
+    overflow: "hidden",
+    backgroundColor: "#E2E8F0",
+  },
+  barFill: {
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: "#0057A8",
+  },
+});
 
 export function StepProgressBar({ progress, label }) {
   const safeProgress = Math.max(0, Math.min(progress, 100));
 
   return (
-    <View>
-      <View className="mb-2 flex-row items-center justify-between">
-        <Text className="text-[12px] font-semibold uppercase tracking-[0.18em] text-slate-500">{label ?? "Progreso"}</Text>
-        <Text className="text-[12px] font-bold text-primary">{safeProgress}%</Text>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.label}>{label ?? "Progreso"}</Text>
+        <Text style={styles.percentage}>{safeProgress}%</Text>
       </View>
-      <View className="h-2 overflow-hidden rounded-full bg-slate-200">
-        <View className="h-2 rounded-full bg-primary" style={{ width: `${safeProgress}%` }} />
+      <View style={styles.barContainer}>
+        <View style={[styles.barFill, { width: `${safeProgress}%` }]} />
       </View>
     </View>
   );

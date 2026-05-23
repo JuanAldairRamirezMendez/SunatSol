@@ -1,6 +1,41 @@
 import { useEffect, useMemo } from "react";
-import { TextInput, Text, View } from "react-native";
+import { TextInput, Text, View, StyleSheet } from "react-native";
 import Animated, { interpolate, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#E2E8F0",
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+    paddingTop: 16,
+    marginVertical: 8,
+  },
+  label: {
+    marginBottom: 8,
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#94A3B8",
+  },
+  inputRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  prefix: {
+    marginRight: 8,
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#94A3B8",
+  },
+  input: {
+    flex: 1,
+    paddingVertical: 4,
+    fontSize: 16,
+    color: "#0F172A",
+  },
+});
 
 export function FloatingLabelInput({
   label,
@@ -28,12 +63,12 @@ export function FloatingLabelInput({
   const hasPrefix = useMemo(() => Boolean(prefix), [prefix]);
 
   return (
-    <View className={`rounded-2xl border border-slate-200 bg-white px-4 pb-3 pt-4 ${className}`}>
-      <Animated.Text className="mb-2 text-[13px] font-semibold text-slate-500" style={labelStyle}>
+    <View style={styles.container}>
+      <Animated.Text style={[styles.label, labelStyle]}>
         {label}
       </Animated.Text>
-      <View className="flex-row items-center">
-        {hasPrefix ? <Text className="mr-2 text-base font-semibold text-slate-500">{prefix}</Text> : null}
+      <View style={styles.inputRow}>
+        {hasPrefix ? <Text style={styles.prefix}>{prefix}</Text> : null}
         <TextInput
           value={value}
           onChangeText={onChangeText}
@@ -49,7 +84,7 @@ export function FloatingLabelInput({
           onBlur={() => {
             focus.value = withTiming(value ? 1 : 0, { duration: 180 });
           }}
-          className="flex-1 py-1 text-[16px] text-slate-900"
+          style={styles.input}
         />
       </View>
     </View>

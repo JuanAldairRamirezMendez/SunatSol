@@ -1,12 +1,30 @@
-import { Pressable, Text } from "react-native";
+import { Pressable, Text, StyleSheet } from "react-native";
+
+const styles = StyleSheet.create({
+  button: {
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#0057A8",
+    backgroundColor: "transparent",
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    marginVertical: 4,
+  },
+  text: {
+    color: "#0057A8",
+    fontSize: 16,
+    fontWeight: "600",
+    textAlign: "center",
+  },
+});
 
 export function OutlineButton({ title, onPress, className = "" }) {
   return (
     <Pressable
       onPress={onPress}
-      className={`rounded-2xl border border-primary bg-transparent px-5 py-4 active:opacity-80 ${className}`}
+      style={styles.button}
     >
-      <Text className="text-center text-base font-semibold text-primary">{title}</Text>
+      <Text style={styles.text}>{title}</Text>
     </Pressable>
   );
 }
