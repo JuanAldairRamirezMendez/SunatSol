@@ -1,10 +1,63 @@
 import { useMemo, useState } from "react";
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ScreenShell } from "@/components/ScreenShell";
 import { StepProgressBar } from "@/components/StepProgressBar";
 import { TooltipSwitch } from "@/components/TooltipSwitch";
+
+const styles = StyleSheet.create({
+  progressContainer: {
+    marginVertical: 8,
+  },
+  inputContainer: {
+    marginTop: 24,
+    gap: 16,
+  },
+  paymentCard: {
+    borderRadius: 16,
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    borderWidth: 1,
+    borderColor: "#E2E8F0",
+    marginVertical: 8,
+  },
+  paymentLabel: {
+    fontSize: 13,
+    fontWeight: "600",
+    letterSpacing: 0.18,
+    textTransform: "uppercase",
+    color: "#94A3B8",
+  },
+  paymentButtonsRow: {
+    marginTop: 12,
+    flexDirection: "row",
+    gap: 12,
+  },
+  paymentButtonFlex: {
+    flex: 1,
+  },
+  conditionCard: {
+    borderRadius: 16,
+    backgroundColor: "#F1F5F9",
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    marginVertical: 8,
+  },
+  conditionLabel: {
+    fontSize: 13,
+    fontWeight: "600",
+    letterSpacing: 0.18,
+    textTransform: "uppercase",
+    color: "#94A3B8",
+  },
+  conditionText: {
+    marginTop: 8,
+    fontSize: 15,
+    color: "#475569",
+  },
+});
 
 export function Step2TaxDetailsScreen({ navigation, route }) {
   const { workerName, clientRuc, clientName, grossAmount } = route.params;
@@ -15,22 +68,24 @@ export function Step2TaxDetailsScreen({ navigation, route }) {
 
   return (
     <ScreenShell title="Detalles tributarios" subtitle={`Paso 2 de 2. Revisa las condiciones del recibo para ${clientName}.`}>
-      <StepProgressBar progress={100} label="Impuestos" />
+      <View style={styles.progressContainer}>
+        <StepProgressBar progress={100} label="Impuestos" />
+      </View>
 
-      <View className="mt-6 gap-4">
-        <View className="rounded-2xl bg-white px-4 py-4">
-          <Text className="text-[13px] font-semibold uppercase tracking-[0.18em] text-slate-500">Forma de pago</Text>
-          <View className="mt-3 flex-row gap-3">
+      <View style={styles.inputContainer}>
+        <View style={styles.paymentCard}>
+          <Text style={styles.paymentLabel}>Forma de pago</Text>
+          <View style={styles.paymentButtonsRow}>
             {["contado", "credito"].map((method) => {
               const active = paymentMethod === method;
               return (
-                <PrimaryButton
-                  key={method}
-                  title={method === "contado" ? "Contado" : "Crédito"}
-                  onPress={() => setPaymentMethod(method)}
-                  variant={active ? "primary" : "muted"}
-                  className="flex-1"
-                />
+                <View key={method} style={styles.paymentButtonFlex}>
+                  <PrimaryButton
+                    title={method === "contado" ? "Contado" : "Crédito"}
+                    onPress={() => setPaymentMethod(method)}
+                    variant={active ? "primary" : "muted"}
+                  />
+                </View>
               );
             })}
           </View>
@@ -43,10 +98,10 @@ export function Step2TaxDetailsScreen({ navigation, route }) {
           tooltip="Aplica si el recibo supera S/1,500 y el cliente es empresa."
         />
 
-        <View className="rounded-2xl bg-slate-50 px-4 py-4">
-          <Text className="text-[13px] font-semibold uppercase tracking-[0.18em] text-slate-500">Condición detectada</Text>
-          <Text className="mt-2 text-[15px] text-slate-700">Monto: S/{grossAmount.toFixed(2)} · RUC: {clientRuc}</Text>
-          <Text className="mt-1 text-[15px] text-slate-700">Retención sugerida: {summaryEnabled ? "Activa" : "Inactiva"}</Text>
+        <View style={styles.conditionCard}>
+          <Text style={styles.conditionLabel}>Condición detectada</Text>
+          <Text style={styles.conditionText}>Monto: S/{grossAmount.toFixed(2)} · RUC: {clientRuc}</Text>
+          <Text style={styles.conditionText}>Retención sugerida: {summaryEnabled ? "Activa" : "Inactiva"}</Text>
         </View>
 
         <PrimaryButton

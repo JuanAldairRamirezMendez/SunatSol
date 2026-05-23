@@ -1,11 +1,43 @@
 import { useEffect, useMemo, useState } from "react";
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 
 import { FloatingLabelInput } from "@/components/FloatingLabelInput";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ScreenShell } from "@/components/ScreenShell";
 import { StepProgressBar } from "@/components/StepProgressBar";
 import { lookupClientName } from "@/data/clients";
+
+const styles = StyleSheet.create({
+  progressContainer: {
+    marginVertical: 8,
+  },
+  inputContainer: {
+    marginTop: 24,
+    gap: 16,
+  },
+  infoCard: {
+    borderRadius: 16,
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    borderWidth: 1,
+    borderColor: "#E2E8F0",
+    marginVertical: 8,
+  },
+  infoLabel: {
+    fontSize: 13,
+    fontWeight: "600",
+    letterSpacing: 0.18,
+    textTransform: "uppercase",
+    color: "#94A3B8",
+  },
+  infoText: {
+    marginTop: 8,
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#0F172A",
+  },
+});
 
 export function Step1ClientDataScreen({ navigation, route }) {
   const { workerName } = route.params;
@@ -32,9 +64,11 @@ export function Step1ClientDataScreen({ navigation, route }) {
 
   return (
     <ScreenShell title="Datos del cliente" subtitle={`Paso 1 de 2. Prepárate para emitir el RHE, ${workerName}.`}>
-      <StepProgressBar progress={50} label="Emisión" />
+      <View style={styles.progressContainer}>
+        <StepProgressBar progress={50} label="Emisión" />
+      </View>
 
-      <View className="mt-6 gap-4">
+      <View style={styles.inputContainer}>
         <FloatingLabelInput
           label="RUC del cliente"
           value={clientRuc}
@@ -42,12 +76,16 @@ export function Step1ClientDataScreen({ navigation, route }) {
           keyboardType="number-pad"
           maxLength={11}
         />
-        <View className="rounded-2xl bg-white px-4 py-4">
-          <Text className="text-[13px] font-semibold uppercase tracking-[0.18em] text-slate-500">Nombre de empresa</Text>
-          <Text className="mt-2 text-[16px] font-semibold text-slate-900">{clientName || "Ingresa un RUC válido para autofetch"}</Text>
+        <View style={styles.infoCard}>
+          <Text style={styles.infoLabel}>Nombre de empresa</Text>
+          <Text style={styles.infoText}>{clientName || "Ingresa un RUC válido para autofetch"}</Text>
         </View>
         <FloatingLabelInput label="Monto bruto" value={grossAmount} onChangeText={setGrossAmount} prefix="S/" keyboardType="decimal-pad" />
         <PrimaryButton title="Continuar" onPress={() => navigation.navigate("Step2_TaxDetails", { workerName, clientRuc, clientName, grossAmount: amountNumber })} disabled={!canContinue} />
+      </View>
+    </ScreenShell>
+  );
+}
       </View>
     </ScreenShell>
   );
