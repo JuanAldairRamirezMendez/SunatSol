@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "SUNAT SOL",
+    "slug": "sunat-sol",
+    "scheme": "sunatsol",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "platforms": ["ios", "android"],
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#0057A8"
+    }
+  }
+}
