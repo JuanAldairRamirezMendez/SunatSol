@@ -1,4 +1,4 @@
-export function formatCurrency(amount: number) {
+export function formatCurrency(amount) {
   return new Intl.NumberFormat("es-PE", {
     style: "currency",
     currency: "PEN",
@@ -6,7 +6,7 @@ export function formatCurrency(amount: number) {
   }).format(amount);
 }
 
-export function calculateRetention(grossAmount: number, enabled: boolean) {
+export function calculateRetention(grossAmount, enabled) {
   if (!enabled) {
     return 0;
   }

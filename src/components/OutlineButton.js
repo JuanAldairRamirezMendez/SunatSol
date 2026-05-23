@@ -1,12 +1,6 @@
 import { Pressable, Text } from "react-native";
 
-type OutlineButtonProps = {
-  title: string;
-  onPress: () => void;
-  className?: string;
-};
-
-export function OutlineButton({ title, onPress, className = "" }: OutlineButtonProps) {
+export function OutlineButton({ title, onPress, className = "" }) {
   return (
     <Pressable
       onPress={onPress}

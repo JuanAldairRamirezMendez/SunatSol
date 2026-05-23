@@ -1,22 +1,18 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Text, View } from "react-native";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { OutlineButton } from "@/components/OutlineButton";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ScreenShell } from "@/components/ScreenShell";
-import { RootStackParamList } from "@/navigation/types";
 import { formatCurrency } from "@/lib/receipt";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Success">;
-
 const actions = [
-  { title: "Descargar PDF", icon: "download-outline" as const },
-  { title: "Enviar Email", icon: "email-outline" as const },
-  { title: "Nuevo Recibo", icon: "plus-circle-outline" as const },
+  { title: "Descargar PDF", icon: "download-outline" },
+  { title: "Enviar Email", icon: "email-outline" },
+  { title: "Nuevo Recibo", icon: "plus-circle-outline" },
 ];
 
-export function SuccessScreen({ navigation, route }: Props) {
+export function SuccessScreen({ navigation, route }) {
   const { workerName, receiptNumber, clientName, totalAmount } = route.params;
 
   return (

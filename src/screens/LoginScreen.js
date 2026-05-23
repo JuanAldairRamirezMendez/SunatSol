@@ -1,4 +1,3 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { Text, View } from "react-native";
 
@@ -6,11 +5,8 @@ import { FloatingLabelInput } from "@/components/FloatingLabelInput";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { OutlineButton } from "@/components/OutlineButton";
 import { ScreenShell } from "@/components/ScreenShell";
-import { RootStackParamList } from "@/navigation/types";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Login">;
-
-export function LoginScreen({ navigation }: Props) {
+export function LoginScreen({ navigation }) {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,7 +21,7 @@ export function LoginScreen({ navigation }: Props) {
         <FloatingLabelInput label="DNI / RUC" value={identifier} onChangeText={setIdentifier} keyboardType="number-pad" maxLength={11} />
         <FloatingLabelInput label="Contraseña" value={password} onChangeText={setPassword} secureTextEntry />
         <PrimaryButton title="Ingresar" onPress={() => navigation.replace("Home", { workerName: "María" })} disabled={identifier.length < 8 || password.length < 6} />
-        <OutlineButton title="Crear cuenta" onPress={() => navigation.replace("Home", { workerName: "Nuevo usuario" })} />
+        <OutlineButton title="Crear cuenta" onPress={() => navigation.navigate("Register")} />
       </View>
 
       <View className="mt-6 rounded-3xl bg-white p-4">

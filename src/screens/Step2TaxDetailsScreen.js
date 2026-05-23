@@ -1,4 +1,3 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useMemo, useState } from "react";
 import { Text, View } from "react-native";
 
@@ -6,13 +5,10 @@ import { PrimaryButton } from "@/components/PrimaryButton";
 import { ScreenShell } from "@/components/ScreenShell";
 import { StepProgressBar } from "@/components/StepProgressBar";
 import { TooltipSwitch } from "@/components/TooltipSwitch";
-import { RootStackParamList } from "@/navigation/types";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Step2_TaxDetails">;
-
-export function Step2TaxDetailsScreen({ navigation, route }: Props) {
+export function Step2TaxDetailsScreen({ navigation, route }) {
   const { workerName, clientRuc, clientName, grossAmount } = route.params;
-  const [paymentMethod, setPaymentMethod] = useState<"contado" | "credito">("contado");
+  const [paymentMethod, setPaymentMethod] = useState("contado");
   const [retentionEnabled, setRetentionEnabled] = useState(grossAmount > 1500);
 
   const summaryEnabled = useMemo(() => retentionEnabled && grossAmount > 1500, [grossAmount, retentionEnabled]);
@@ -25,7 +21,7 @@ export function Step2TaxDetailsScreen({ navigation, route }: Props) {
         <View className="rounded-2xl bg-white px-4 py-4">
           <Text className="text-[13px] font-semibold uppercase tracking-[0.18em] text-slate-500">Forma de pago</Text>
           <View className="mt-3 flex-row gap-3">
-            {(["contado", "credito"] as const).map((method) => {
+            {["contado", "credito"].map((method) => {
               const active = paymentMethod === method;
               return (
                 <PrimaryButton

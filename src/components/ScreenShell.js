@@ -1,14 +1,6 @@
-import { ReactNode } from "react";
 import { ScrollView, Text, View } from "react-native";
 
-type ScreenShellProps = {
-  title: string;
-  subtitle?: string;
-  children: ReactNode;
-  padded?: boolean;
-};
-
-export function ScreenShell({ title, subtitle, children, padded = true }: ScreenShellProps) {
+export function ScreenShell({ title, subtitle, children, padded = true }) {
   return (
     <View className="flex-1 bg-background">
       <View className="absolute left-[-64px] top-[-40px] h-48 w-48 rounded-full bg-primary/10" />

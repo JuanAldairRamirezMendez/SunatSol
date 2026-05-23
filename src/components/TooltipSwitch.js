@@ -2,14 +2,7 @@ import { useState } from "react";
 import { Modal, Pressable, Switch, Text, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
-type TooltipSwitchProps = {
-  label: string;
-  value: boolean;
-  onValueChange: (nextValue: boolean) => void;
-  tooltip: string;
-};
-
-export function TooltipSwitch({ label, value, onValueChange, tooltip }: TooltipSwitchProps) {
+export function TooltipSwitch({ label, value, onValueChange, tooltip }) {
   const [visible, setVisible] = useState(false);
 
   return (

@@ -1,4 +1,3 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useEffect, useMemo, useState } from "react";
 import { Text, View } from "react-native";
 
@@ -6,12 +5,9 @@ import { FloatingLabelInput } from "@/components/FloatingLabelInput";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ScreenShell } from "@/components/ScreenShell";
 import { StepProgressBar } from "@/components/StepProgressBar";
-import { RootStackParamList } from "@/navigation/types";
 import { lookupClientName } from "@/data/clients";
 
-type Props = NativeStackScreenProps<RootStackParamList, "Step1_ClientData">;
-
-export function Step1ClientDataScreen({ navigation, route }: Props) {
+export function Step1ClientDataScreen({ navigation, route }) {
   const { workerName } = route.params;
   const [clientRuc, setClientRuc] = useState("");
   const [clientName, setClientName] = useState("");

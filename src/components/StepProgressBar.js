@@ -1,11 +1,6 @@
 import { Text, View } from "react-native";
 
-type StepProgressBarProps = {
-  progress: number;
-  label?: string;
-};
-
-export function StepProgressBar({ progress, label }: StepProgressBarProps) {
+export function StepProgressBar({ progress, label }) {
   const safeProgress = Math.max(0, Math.min(progress, 100));
 
   return (

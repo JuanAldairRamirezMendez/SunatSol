@@ -2,29 +2,18 @@ import { useEffect, useMemo } from "react";
 import { TextInput, Text, View } from "react-native";
 import Animated, { interpolate, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
-type FloatingLabelInputProps = {
-  label: string;
-  value: string;
-  onChangeText: (value: string) => void;
-  placeholder?: string;
-  keyboardType?: "default" | "numeric" | "number-pad" | "decimal-pad";
-  prefix?: string;
-  secureTextEntry?: boolean;
-  className?: string;
-  maxLength?: number;
-};
-
 export function FloatingLabelInput({
   label,
   value,
   onChangeText,
   placeholder,
   keyboardType = "default",
+  autoCapitalize,
   prefix,
   secureTextEntry = false,
   className = "",
   maxLength,
-}: FloatingLabelInputProps) {
+}) {
   const focus = useSharedValue(value ? 1 : 0);
 
   useEffect(() => {
@@ -51,6 +40,7 @@ export function FloatingLabelInput({
           placeholder={placeholder}
           placeholderTextColor="#94A3B8"
           keyboardType={keyboardType}
+          autoCapitalize={autoCapitalize}
           secureTextEntry={secureTextEntry}
           maxLength={maxLength}
           onFocus={() => {
